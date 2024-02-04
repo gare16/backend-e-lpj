@@ -21,3 +21,22 @@ export const getAnggaranPagu = async (req, res) => {
     res.send("err");
   }
 };
+
+export const createAnggaran = async (req, res) => {
+  const { totalPagu } = req.body.data;
+  try {
+    const result = await prisma.anggaran.create({
+      where: {
+        tahun: 2024,
+      },
+      data: {
+        totalPagu: totalPagu,
+      },
+    });
+    res.status(200).json({
+      message: "Done",
+    });
+  } catch (error) {
+    res.send("err");
+  }
+};

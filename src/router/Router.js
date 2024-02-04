@@ -26,7 +26,10 @@ import {
   deleteSurat,
   getSurat,
 } from "../controllers/SuratController.js";
-import { getAnggaranPagu } from "../controllers/AnggaranController.js";
+import {
+  createAnggaran,
+  getAnggaranPagu,
+} from "../controllers/AnggaranController.js";
 
 const router = express.Router();
 const app = express();
@@ -34,6 +37,7 @@ app.use(cookieParser());
 
 // Anggraan
 router.get("/anggaran/:id", getAnggaranPagu);
+router.post("/anggaran", createAnggaran);
 
 // User Router
 router.post("/register", createUser);
