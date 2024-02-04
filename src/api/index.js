@@ -7,7 +7,7 @@ import { PrismaClient } from "@prisma/client";
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, "../files");
+    callback(null, "./files");
   },
   filename: function (req, file, callback) {
     callback(null, file.originalname);
@@ -47,6 +47,7 @@ app.post("/upload/:id", upload.single("data[file]"), async (req, res) => {
       Message: "File Uploaded",
     });
   } catch (error) {
+    console.log(error);
     res.send("Error");
   }
 });
@@ -68,6 +69,7 @@ app.post("/upload-surat", upload.single("data[file]"), async (req, res) => {
       Message: "File Uploaded",
     });
   } catch (error) {
+    console.log(error);
     res.send("Error");
   }
 });

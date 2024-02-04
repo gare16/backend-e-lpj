@@ -17,7 +17,7 @@
   },
   "type": "module",
   "scripts": {
-    "start": "node ./src/api/index.js",
+    "start": "nodemon ./src/api/index.js",
     "test": "echo \"Error: no test specified \" && exit 1 "
   },
   "author": "garee",

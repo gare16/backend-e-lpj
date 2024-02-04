@@ -39,13 +39,18 @@ export const deleteSurat = async (req, res) => {
 
 export const SuratViewer = async (req, res) => {
   const id = req.params.id;
-  const result = await prisma.surat.findUnique({
-    where: {
-      id: Number(id),
-    },
-  });
-  res.setHeader("Content-type", "application/pdf");
-  res.set("Content-Disposition", "inline; filename=" + result.url);
-  res.sendFile(result.url, { root: path.join(__dirname, "files") });
+  try {
+    const result = await prisma.surat.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+    res.setHeader("Content-type", "application/pdf");
+    res.set("Content-Disposition", "inline; filename=" + result.url);
+    res.sendFile(result.url, { root: path.join(__dirname, "files") });
+  } catch (error) {
+    console.log(error);
+    res.send("err");
+  }
   // res.download(result.url, { root: path.join(__dirname, "files") });
 };

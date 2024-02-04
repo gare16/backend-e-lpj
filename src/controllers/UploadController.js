@@ -33,13 +33,17 @@ export const getFileUpload = async (req, res) => {
 
 export const fileViewer = async (req, res) => {
   const id = req.params.id;
-  const result = await prisma.uploadFile.findUnique({
-    where: {
-      id: Number(id),
-    },
-  });
-  res.setHeader("Content-type", "application/pdf");
-  res.set("Content-Disposition", "inline; filename=" + result.url);
-  res.sendFile(result.url, { root: path.join(__dirname, "files") });
-  // res.download(result.url, { root: path.join(__dirname, "files") });
+  try {
+    const result = await prisma.uploadFile.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+    res.setHeader("Content-type", "application/pdf");
+    res.set("Content-Disposition", "inline; filename=" + result.url);
+    res.sendFile(result.url, { root: path.join(__dirname, "files") });
+  } catch (error) {
+    console.log(error);
+    res.send("err");
+  }
 };
