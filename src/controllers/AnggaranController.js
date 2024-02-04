@@ -26,10 +26,8 @@ export const createAnggaran = async (req, res) => {
   const { totalPagu } = req.body.data;
   try {
     const result = await prisma.anggaran.create({
-      where: {
-        tahun: 2024,
-      },
       data: {
+        tahun: 2024,
         totalPagu: totalPagu,
       },
     });
