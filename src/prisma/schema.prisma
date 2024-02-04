@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Laporan {
+  id                                 Int          @id @default(autoincrement())
+  tanggal_pengajuan                  DateTime
+  tanggal_selesai                    DateTime
+  deskripsi                          String
+  kode_mak                           Int
+  nilai_lpj                          Int
+  tipe                               String?
+  tipe_deskripsi                     String?
+  status                             String?
+  createdAt                          DateTime     @default(now())
+  updatedAt                          DateTime?    @default(now())
+  authorName                         String?
+  ba_pembayaran                      Boolean?
+  ba_serah_terima                    Boolean?
+  boarding_pass                      Boolean?
+  bp_apbn                            Boolean?
+  copy_paspor                        Boolean?
+  copy_personal                      Boolean?
+  copy_spk                           Boolean?
+  daftar_hadir                       Boolean?
+  dokumentasi                        Boolean?
+  faktur_pajak                       Boolean?
+  form_ppd                           Boolean?
+  garansi_bank                       Boolean?
+  honor                              Boolean?
+  kuitansi                           Boolean?
+  kwitansi_hotel                     Boolean?
+  notulensi                          Boolean?
+  paparan                            Boolean?
+  rpa                                Boolean?
+  sp_pengeluaran                     Boolean?
+  spd                                Boolean?
+  sppd                               Boolean?
+  sptj_mutlak                        Boolean?
+  surat_tugas                        Boolean?
+  undangan                           Boolean?
+  verifikatorName                    String?
+  User_Laporan_authorNameToUser      User?        @relation("Laporan_authorNameToUser", fields: [authorName], references: [username])
+  User_Laporan_verifikatorNameToUser User?        @relation("Laporan_verifikatorNameToUser", fields: [verifikatorName], references: [username])
+  ralat                              Ralat[]
+  UploadFile                         UploadFile[]
+}
+
+model Ralat {
+  id         Int      @id @default(autoincrement())
+  ralat      String
+  tanggal    DateTime
+  kesalahan  String
+  keterangan String
+  idLaporan  Int?
+  userInput  String?
+  laporan    Laporan? @relation(fields: [idLaporan], references: [id])
+  user       User?    @relation(fields: [userInput], references: [username])
+}
+
+model User {
+  id                            Int       @id @default(autoincrement())
+  email                         String    @unique
+  username                      String    @unique
+  password                      String
+  first_name                    String?   @unique
+  last_name                     String?
+  tempat_lahir                  String?
+  tanggal_lahir                 DateTime?
+  posisi                        String?
+  agama                         String?
+  jenis_kelamin                 String?
+  hobby                         String?
+  nomor_hp                      String?
+  alamat                        String?
+  provinsi                      String?
+  daerah                        String?
+  kecamatan                     String?
+  kelurahan                     String?
+  kode_pos                      String?
+  img_url                       String?
+  role                          Roles
+  nik                           String?
+  Laporan_authorNameToUser      Laporan[] @relation("Laporan_authorNameToUser")
+  Laporan_verifikatorNameToUser Laporan[] @relation("Laporan_verifikatorNameToUser")
+  ralat                         Ralat[]
+}
+
+model UploadFile {
+  id        Int      @id @default(autoincrement())
+  idLaporan Int?
+  deskripsi String
+  url       String
+  laporan   Laporan? @relation(fields: [idLaporan], references: [id])
+}
+
+model Surat {
+  id         Int      @id @default(autoincrement())
+  url        String
+  tipe       String?
+  deskripsi  String
+  keterangan String
+  createdAt  DateTime @default(now())
+}
+
+model Anggaran {
+  totalPagu Int
+  createAt  DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  tahun     Int      @unique
+}
+
+enum Roles {
+  super_admin
+  admin
+  user
+}
