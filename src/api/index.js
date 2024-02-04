@@ -7,7 +7,7 @@ import { PrismaClient } from "@prisma/client";
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, "./files");
+    callback(null, "../files");
   },
   filename: function (req, file, callback) {
     callback(null, file.originalname);
