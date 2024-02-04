@@ -37,6 +37,7 @@ export const createAnggaran = async (req, res) => {
       message: "Done",
     });
   } catch (error) {
+    console.log(error);
     res.send("err");
   }
 };
