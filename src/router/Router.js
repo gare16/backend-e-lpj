@@ -29,6 +29,7 @@ import {
 import {
   createAnggaran,
   getAnggaranPagu,
+  updateAnggaran,
 } from "../controllers/AnggaranController.js";
 
 const router = express.Router();
@@ -38,6 +39,7 @@ app.use(cookieParser());
 // Anggraan
 router.get("/anggaran/:id", getAnggaranPagu);
 router.post("/anggaran", createAnggaran);
+router.post("/anggaran/update", updateAnggaran);
 
 // User Router
 router.post("/register", createUser);

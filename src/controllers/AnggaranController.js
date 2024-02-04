@@ -35,7 +35,26 @@ export const createAnggaran = async (req, res) => {
       message: "Done",
     });
   } catch (error) {
-    console.log(error);
+    res.send("err");
+  }
+};
+
+export const updateAnggaran = async (req, res) => {
+  const { totalPagu } = req.body.data;
+  try {
+    const result = await prisma.anggaran.update({
+      where: {
+        tahun: 2024,
+      },
+      data: {
+        totalPagu: totalPagu,
+      },
+    });
+    res.status(201).json({
+      message: "Done",
+    });
+  } catch (error) {
+    console.log("Logging Error", error);
     res.send("err");
   }
 };
