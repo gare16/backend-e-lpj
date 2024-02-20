@@ -4,6 +4,7 @@ import {
   getUser,
   getUserByName,
   login,
+  resetPassword,
   updateUser,
 } from "../controllers/UserController.js";
 import {
@@ -44,16 +45,17 @@ router.post("/anggaran/update", updateAnggaran);
 // User Router
 router.post("/register", createUser);
 router.post("/login", login);
-router.get("/users", getUser);
 router.post("/user/update/:id", updateUser);
+router.post("/user/reset/:id", resetPassword);
+router.get("/users", getUser);
 router.get("/user", getUserByName);
 
 // Laporan Router
 router.get("/laporan", getLaporan);
+router.get("/laporan/:id", getLaporanById);
 router.post("/laporan", createLaporan);
 router.post("/laporan/delete", deleteLaporan);
 router.post("/laporan/status/:id", setLaporanStatus);
-router.get("/laporan/:id", getLaporanById);
 router.post("/update/:id", updateLaporan);
 
 // Laporan Checking Router

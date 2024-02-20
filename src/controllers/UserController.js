@@ -114,14 +114,14 @@ export const getUserByName = async (req, res) => {
       },
     });
     res.status(200).json({
-      data: [result],
+      result: result,
     });
   } catch (error) {
     res.send("err");
   }
 };
 
-export const updateUser = async (req, res) => {
+export const resetPassword = async (req, res) => {
   const id = req.params.id;
   const { password, new_password } = req.body.data;
   try {
@@ -152,3 +152,24 @@ export const updateUser = async (req, res) => {
     res.send("err");
   }
 };
+
+export const updateUser = async (req, res) => {
+  const {id} = req.params
+  const data = req.body.data
+  try {
+    // const result = await prisma.user.update({
+    //   where: {
+    //     id: id
+    //   },
+    //   data: data
+    // })
+    console.log((data));
+    res.status(201).json({
+      message: "updated!"
+    })
+  } catch (error) {
+    console.log(error)
+    res.send("err")
+  }
+
+}

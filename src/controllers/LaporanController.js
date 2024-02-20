@@ -9,8 +9,8 @@ export const getLaporan = async (req, res) => {
 
   try {
     const result = await prisma.laporan.findMany({
-      skip: currentPage,
-      take: nextPage,
+      skip: parseInt(currentPage),
+      take: parseInt(nextPage),
       where: {
         deskripsi: searchValue
           ? {
@@ -26,7 +26,7 @@ export const getLaporan = async (req, res) => {
       result,
     });
   } catch (error) {
-    error;
+    console.log(error);
     res.send("err");
   }
 };
