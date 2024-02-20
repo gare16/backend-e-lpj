@@ -783,7 +783,7 @@ export const createRalat = async (req, res) => {
 
 export const setLaporanStatus = async (req, res) => {
   const id = req.params.id;
-  const { status } = req.body.data;
+  const { status, verifikatorName } = req.body.data;
   try {
     const result = await prisma.laporan.update({
       where: {
@@ -791,6 +791,7 @@ export const setLaporanStatus = async (req, res) => {
       },
       data: {
         status: status,
+        verifikatorName: verifikatorName,
       },
     });
     res.status(200).json({
