@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:polymorph@localhost:5432/mydb?schema=e_perjadin"
 }
 
 model Laporan {
@@ -12,7 +12,7 @@ model Laporan {
   tanggal_pengajuan                  DateTime
   tanggal_selesai                    DateTime
   deskripsi                          String
-  kode_mak                           Int
+  kode_mak                           String
   nilai_lpj                          Int
   tipe                               String?
   tipe_deskripsi                     String?
@@ -57,8 +57,8 @@ model Ralat {
   tanggal    DateTime
   kesalahan  String
   keterangan String
-  idLaporan  Int?
   userInput  String?
+  idLaporan  Int?
   laporan    Laporan? @relation(fields: [idLaporan], references: [id])
   user       User?    @relation(fields: [userInput], references: [username])
 }
@@ -68,24 +68,24 @@ model User {
   email                         String    @unique
   username                      String    @unique
   password                      String
-  first_name                    String?   @unique
-  last_name                     String?
-  tempat_lahir                  String?
-  tanggal_lahir                 DateTime?
-  posisi                        String?
+  role                          Roles
   agama                         String?
-  jenis_kelamin                 String?
-  hobby                         String?
-  nomor_hp                      String?
   alamat                        String?
-  provinsi                      String?
   daerah                        String?
+  first_name                    String?   @unique
+  hobby                         String?
+  img_url                       String?
+  jenis_kelamin                 String?
   kecamatan                     String?
   kelurahan                     String?
   kode_pos                      String?
-  img_url                       String?
-  role                          Roles
+  last_name                     String?
+  nomor_hp                      String?
+  posisi                        String?
+  provinsi                      String?
   nik                           String?
+  tanggal_lahir                 DateTime?
+  tempat_lahir                  String?
   Laporan_authorNameToUser      Laporan[] @relation("Laporan_authorNameToUser")
   Laporan_verifikatorNameToUser Laporan[] @relation("Laporan_verifikatorNameToUser")
   ralat                         Ralat[]

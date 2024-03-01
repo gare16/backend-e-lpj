@@ -12,14 +12,31 @@ export const getLaporan = async (req, res) => {
       skip: parseInt(currentPage),
       take: parseInt(nextPage),
       where: {
-        deskripsi: searchValue
-          ? {
-              contains: searchValue,
-              mode: "insensitive",
-            }
-          : {
-              not: "",
-            },
+        // {
+        //   kode_mak: searchValue
+        //     ? {
+        //         contains: searchValue,
+        //         mode: "insensitive",
+        //       }
+        //     : {
+        //         not: "",
+        //       },
+        // },
+        // {
+        //   deskripsi: searchValue
+        //     ? {
+        //         contains: searchValue,
+        //         mode: "insensitive",
+        //       }
+        //     : {
+        //         not: "",
+        //       },
+        // },
+
+        tanggal_pengajuan: {
+          gte: new Date("2024-01-01"),
+          lte: new Date("2024-01-30"),
+        },
       },
     });
     res.status(200).json({
@@ -28,6 +45,24 @@ export const getLaporan = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send("err");
+  }
+};
+
+export const getLaporanOrderedBy = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const result = await prisma.laporan.findMany({
+      where: {
+        tanggal_pengajuan: {},
+      },
+    });
+    console.log(result);
+    res.status(200).json({
+      result: result,
+    });
+  } catch (error) {
+    console.log(error);
+    res.send("error");
   }
 };
 
@@ -304,7 +339,7 @@ export const createLaporan = async (req, res) => {
         totalPagu: total - nilai_lpj,
       },
     });
-    const inputX = String(req.body.data.kode_mak);
+    const inputX = req.body.data.kode_mak;
     inputX === "521211"
       ? await prisma.laporan.create({
           data: option1,

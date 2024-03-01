@@ -28,7 +28,7 @@ export const createUser = async (req, res) => {
       msg: "User Created!",
     });
   } catch (error) {
-    error;
+    console.log(error);
     res.status(500).json(error);
   }
 };
@@ -47,7 +47,7 @@ export const login = async (req, res) => {
         message: "Username or Password is Wrong!",
       });
     } else {
-      const expiresIn = 60 * 60 * 24 * 1;
+      const expiresIn = 60 * 60 * 5;
       const secret = process.env.JWT_SECRET;
       const payload = {
         role: user.role,
@@ -154,22 +154,20 @@ export const resetPassword = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const {id} = req.params
-  const data = req.body.data
+  const id = req.params.id;
+  const { datas } = req.body.data;
   try {
-    // const result = await prisma.user.update({
-    //   where: {
-    //     id: id
-    //   },
-    //   data: data
-    // })
-    console.log((data));
+    const result = await prisma.user.update({
+      where: {
+        id: parseInt(id),
+      },
+      data: datas,
+    });
     res.status(201).json({
-      message: "updated!"
-    })
+      message: "updated!",
+    });
   } catch (error) {
-    console.log(error)
-    res.send("err")
+    console.log(error);
+    res.send("err");
   }
-
-}
+};

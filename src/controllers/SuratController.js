@@ -33,6 +33,7 @@ export const deleteSurat = async (req, res) => {
     });
     res.status(200).send("Surat Deleted.");
   } catch (error) {
+    console.log(error);
     res.send("Error", error);
   }
 };
